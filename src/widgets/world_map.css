@@ -1,0 +1,16 @@
+
+
+svg>path {
+    fill: #fefefe;
+    stroke: #000;
+    stroke-width: 0.25;
+}
+  
+svg {
+}
+
+svg>path:hover {
+    cursor: pointer;
+    fill: #e2e2e2;
+}
+
