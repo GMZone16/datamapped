@@ -2,7 +2,7 @@
 
 export default function Navbar() {
     
-    return <nav className="navbar">
+    return <div className="navbar-container"><nav className="navbar">
     <div className="logo"><a href="/">DataMapped</a></div>
     <input type="checkbox" id="nav-toggle" className="nav-toggle"/>
         <label htmlFor="nav-toggle" className="nav-toggle-label">
@@ -10,8 +10,7 @@ export default function Navbar() {
             <span></span>
         </label>
     <ul className="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/attendmate">AttendMate</a></li>
+        {/* <li><a href="/">Home</a></li> */}
     </ul>
-</nav>
+</nav></div>
 }

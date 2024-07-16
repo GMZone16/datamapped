@@ -6,6 +6,12 @@ import { useEffect, useState } from "react";
 
 
 export default function WorldMap () {
-   return <div className="world-map"><WorldMapSVGFile/></div>
+   const [currentHoveredCountry, setCurrentHoveredCountry] = useState(null);
+   return <div className="world-map">
+      <WorldMapSVGFile setHover={setCurrentHoveredCountry} hoverRef={currentHoveredCountry} />
+      {currentHoveredCountry && (
+        <div className="hovering">Hovering over: {currentHoveredCountry}</div>
+      )}
+      </div>
  
 }
