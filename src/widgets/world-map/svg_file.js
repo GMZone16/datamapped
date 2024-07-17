@@ -14,25 +14,17 @@ export default function WorldMapSVGFile(props){
        const panZoom = svgPanZoom(svgRef.current, {
          viewportSelector: '.svg-pan-zoom_viewport'
        , panEnabled: enabledPan
-       , controlIconsEnabled: true
        , zoomEnabled: true
        , dblClickZoomEnabled: true
        , mouseWheelZoomEnabled: true
        , preventMouseEventsDefault: true
        , zoomScaleSensitivity: 0.2
        , minZoom: 1
-       , maxZoom: 2.5
+       , maxZoom: 10
        , fit: true
        , contain: true
        , center: true
-       , refreshRate: 'auto'
-       , onZoom: function() {
-         if(panZoom.zoom === 1) {
-            setEnabledPan(false);
-         } else {
-            setEnabledPan(true);
-         }
-       }
+       , refreshRate: 'auto',
        });
        setPanZoomInstance(panZoom); 
      }
@@ -40,7 +32,7 @@ export default function WorldMapSVGFile(props){
  
    const handleMouseOver = (event) => {
      const target = event.target;
-     if (target.tagName === "path" && target.hasAttribute("title")) {
+     if (target.hasAttribute("title")) {
        props.setHover(target.getAttribute("title"));
      } else {
        props.setHover(null);
