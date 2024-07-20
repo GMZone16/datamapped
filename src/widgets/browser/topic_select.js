@@ -13,20 +13,9 @@ export default function TopicSelect(){
     "Education",
     "Social Development"
     ];
-    const metrics = ["Any", ];
     return <div className="topic-select">
         <div className="category-select">
             <p className="category-text">Category:&nbsp;&nbsp;</p>
-        <select name="category" style={comfortaa.style}>
-            {
-                categories.map((e) => {
-                return <option key={e} value={e}>{e}</option>
-                })
-            }
-        </select>
-        </div>
-        <div className="metric-select">
-            <p className="category-text">Metric:&nbsp;&nbsp;</p>
         <select name="category" style={comfortaa.style}>
             {
                 categories.map((e) => {

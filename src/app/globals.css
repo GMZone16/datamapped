@@ -5,6 +5,7 @@ body {
   margin:0;
   padding: 0;
   height: 100%;
+  overflow: hidden;
 }
 
 
@@ -93,7 +94,7 @@ color: #3f3f3f;
   background-color: transparent;
 }
 
-.category-text, .metric-select {
+.category-text{
   display: inline-flex;
   margin-bottom: 5px;
   margin-top: 5px;

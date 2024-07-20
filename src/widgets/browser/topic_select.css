@@ -15,7 +15,7 @@
     background-color: transparent;
 }
 
-.category-text, .metric-select {
+.category-text{
     display: inline-flex;
     margin-right: 5px;
     margin-left: 5px;
