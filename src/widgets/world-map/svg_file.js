@@ -3,18 +3,66 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function WorldMapSVGFile(props){
-   const handleMouseOver = (event) => {
-     const target = event.target;
-     if (target.hasAttribute("title")) {
-       props.setHover(target.getAttribute("title"));
-     } else {
-       props.setHover(null);
-     }
-   };
-   
+   const [isPanning, setIsPanning] = useState(false);
+  const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const handleMouseDown = (e) => {
+    setIsPanning(true);
+    setStartCoords({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseMove = (e) => {
+    if (isPanning) {
+      const newOffset = {
+        x: e.clientX - startCoords.x,
+        y: e.clientY - startCoords.y,
+      };
+      setOffset(newOffset);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsPanning(false);
+  };
+
+  useEffect(() => {
+    if (props.svgRef.current) {
+      props.svgRef.current.addEventListener('mousedown', handleMouseDown);
+      props.svgRef.current.addEventListener('mousemove', handleMouseMove);
+      props.svgRef.current.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      if (props.svgRef.current) {
+        props.svgRef.current.removeEventListener('mousedown', handleMouseDown);
+        props.svgRef.current.removeEventListener('mousemove', handleMouseMove);
+        props.svgRef.current.removeEventListener('mouseup', handleMouseUp);
+      }
+    };
+  }, [props.svgRef, handleMouseDown, handleMouseMove, handleMouseUp]);
+
+  useEffect(() => {
+    if (props.svgRef.current) {
+      // Combine scale and offset for total transform
+      const totalTransform = `scale(${props.zoomIn ? props.zoomIn : 1}) translate(${offset.x}px, ${offset.y}px)`;
+      props.svgRef.current.style.transform = totalTransform;
+    }
+  }, [offset, props.svgRef, props.zoomIn]); // Add zoomIn to dependencies
+
+
+  const handleMouseOver = (event) => {
+    const target = event.target;
+    if (target.hasAttribute("title")) {
+      props.setHover(target.getAttribute("title"));
+    } else {
+      props.setHover(null);
+    }
+  };
 return <svg 
 onScroll={(event) => {
-   
+   console.log(event);
+   props.zoomIn();
 }}
    role="img"
     className="svg" ref={props.svgRef} viewBox="0 0 1010 666" preserveAspectRatio="meet" onMouseOver={handleMouseOver}>
