@@ -1,72 +1,83 @@
 "use client"
-
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function WorldMapSVGFile(props){
+   const [scale, setScale] = useState(1);
+   const [translate, setTranslate] = useState({ x: 0, y: 0 });
    const [isPanning, setIsPanning] = useState(false);
-  const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-
-  const handleMouseDown = (e) => {
-    setIsPanning(true);
-    setStartCoords({ x: e.clientX, y: e.clientY });
-  };
-
-  const handleMouseMove = (e) => {
-    if (isPanning) {
-      const newOffset = {
-        x: e.clientX - startCoords.x,
-        y: e.clientY - startCoords.y,
-      };
-      setOffset(newOffset);
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsPanning(false);
-  };
-
-  useEffect(() => {
-    if (props.svgRef.current) {
-      props.svgRef.current.addEventListener('mousedown', handleMouseDown);
-      props.svgRef.current.addEventListener('mousemove', handleMouseMove);
-      props.svgRef.current.addEventListener('mouseup', handleMouseUp);
-    }
-
-    return () => {
-      if (props.svgRef.current) {
-        props.svgRef.current.removeEventListener('mousedown', handleMouseDown);
-        props.svgRef.current.removeEventListener('mousemove', handleMouseMove);
-        props.svgRef.current.removeEventListener('mouseup', handleMouseUp);
-      }
-    };
-  }, [props.svgRef, handleMouseDown, handleMouseMove, handleMouseUp]);
-
-  useEffect(() => {
-    if (props.svgRef.current) {
-      // Combine scale and offset for total transform
-      const totalTransform = `scale(${props.zoomIn ? props.zoomIn : 1}) translate(${offset.x}px, ${offset.y}px)`;
-      props.svgRef.current.style.transform = totalTransform;
-    }
-  }, [offset, props.svgRef, props.zoomIn]); // Add zoomIn to dependencies
-
-
-  const handleMouseOver = (event) => {
-    const target = event.target;
-    if (target.hasAttribute("title")) {
-      props.setHover(target.getAttribute("title"));
-    } else {
-      props.setHover(null);
-    }
-  };
-return <svg 
-onScroll={(event) => {
-   console.log(event);
-   props.zoomIn();
-}}
-   role="img"
-    className="svg" ref={props.svgRef} viewBox="0 0 1010 666" preserveAspectRatio="meet" onMouseOver={handleMouseOver}>
+   const [startPanPosition, setStartPanPosition] = useState({ x: 0, y: 0 });
  
+   const handleWheel = (event) => {
+     event.preventDefault();
+     const delta = event.deltaY > 0 ? 1.1 : 0.9;
+     setScale(scale * delta);
+   };
+ 
+   const handleMouseDown = (event) => {
+     setIsPanning(true);
+     setStartPanPosition({ x: event.clientX, y: event.clientY });
+   };
+ 
+   const handleMouseMove = (event) => {
+      console.log(isPanning);
+     if (isPanning) {
+       const dx = event.clientX - startPanPosition.x;
+       const dy = event.clientY - startPanPosition.y;
+       setTranslate({ x: translate.x + dx, y: translate.y + dy });
+       setStartPanPosition({ x: event.clientX, y: event.clientY });
+     }
+   };
+ 
+   const handleMouseUp = () => {
+     setIsPanning(false);
+   };
+ 
+   useEffect(() => {
+     const svgElement = props.svgRef.current;
+     if (svgElement) {
+       const rect = svgElement.getBoundingClientRect();
+       const viewBox = svgElement.viewBox.baseVal;
+       const svgWidth = viewBox.width;
+       const svgHeight = viewBox.height;
+ 
+       const minScale = 0.5;
+       const maxScale = 2;
+ 
+       // Prevent zooming out too far
+       if (scale < minScale) {
+         setScale(minScale);
+       }
+ 
+       // Prevent zooming in too far
+       if (scale > maxScale) {
+         setScale(maxScale);
+       }
+ 
+       // Prevent panning outside the SVG bounds
+       const newTranslateX = Math.max(
+         -svgWidth * scale / 2 + rect.width / 2,
+         Math.min(svgWidth * scale / 2 - rect.width / 2, translate.x)
+       );
+       const newTranslateY = Math.max(
+         -svgHeight * scale / 2 + rect.height / 2,
+         Math.min(svgHeight * scale / 2 - rect.height / 2, translate.y)
+       );
+       setTranslate({ x: newTranslateX, y: newTranslateY });
+     }
+   }, []);
+return <svg
+ref={props.svgRef}
+className="svg"
+viewBox="0 0 1010 666"
+preserveAspectRatio="meet"
+onWheel={handleWheel}
+onMouseDown={handleMouseDown}
+onMouseMove={handleMouseMove}
+onMouseUp={handleMouseUp}
+style={{
+  transform: `scale(${scale}) translate(${translate.x}px, ${translate.y}px)`,
+}}
+>
   <path
      d="m 479.68275,331.6274 -0.077,0.025 -0.258,0.155 -0.147,0.054 -0.134,0.027 -0.105,-0.011 -0.058,-0.091 0.006,-0.139 -0.024,-0.124 -0.02,-0.067 0.038,-0.181 0.086,-0.097 0.119,-0.08 0.188,0.029 0.398,0.116 0.083,0.109 10e-4,0.072 -0.073,0.119 z"
      title="Andorra"

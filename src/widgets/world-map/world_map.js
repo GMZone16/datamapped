@@ -1,24 +1,20 @@
 "use client"
-import { ReactSVG } from "react-svg";
 import "./world_map.css";
 import WorldMapSVGFile from "./svg_file";
-import { useEffect, useRef, useState } from "react";
-import svgPanZoom, { zoomOut } from "svg-pan-zoom"; 
+import { useRef, useState } from "react";
+import { SvgPanZoom } from 'react-zoom-pan';
 
-
-export default function WorldMap () {
+const WorldMap = () => {
    const svgRef = useRef(null);
    const [currentHoveredCountry, setCurrentHoveredCountry] = useState(null);
   
  
-   return <div className="world-map" onScroll={(e) => {
-    console.log(e);
-      zoomOut()
-
-   }}>
-      <WorldMapSVGFile setHover={setCurrentHoveredCountry} hoverRef={currentHoveredCountry} svgRef={svgRef}
-      //  zoomIn={zoomIn} zoomOut={zoomOut}
-       />
+   return <div className="world-map">
+        <WorldMapSVGFile
+          setHover={setCurrentHoveredCountry}
+          hoverRef={currentHoveredCountry}
+          svgRef={svgRef}
+        />
       <div className="zoom-ctn">
         <button className="zoom-btn" onClick={()=> {}}>+</button>
         <button className="zoom-btn" onClick={() => {}}>-</button>
@@ -29,3 +25,5 @@ export default function WorldMap () {
       </div>
  
 }
+
+export default WorldMap;
