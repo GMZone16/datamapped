@@ -10,7 +10,13 @@ export default function WorldMapSVGFile(props){
    const handleWheel = (event) => {
      event.preventDefault();
      const delta = event.deltaY > 0 ? 1.1 : 0.9;
-     setScale(scale * delta);
+      if(scale * delta <= 1) {
+         setScale(1);
+         setTranslate({x:0, y:0})
+     } else {
+         setScale(scale * delta);
+ 
+     }
    };
  
    const handleMouseDown = (event) => {
@@ -21,10 +27,22 @@ export default function WorldMapSVGFile(props){
    const handleMouseMove = (event) => {
       console.log(isPanning);
      if (isPanning) {
-       const dx = event.clientX - startPanPosition.x;
-       const dy = event.clientY - startPanPosition.y;
-       setTranslate({ x: translate.x + dx, y: translate.y + dy });
-       setStartPanPosition({ x: event.clientX, y: event.clientY });
+       const dx = (event.clientX - startPanPosition.x) * (1/scale);
+       const dy = (event.clientY - startPanPosition.y) * (1/scale);
+       if(scale == 1) {
+         setTranslate({x:0, y:0})
+       } else {
+         if(translate.x +dx>= 500 || translate.x +dx <=-500) {
+         setTranslate({ x: (translate.x) , y: (translate.y + dy )});
+         } else if(translate.y +dy >= 300 || translate.y +dy <=-300) {
+            setTranslate({ x: (translate.x +dx) , y: (translate.y  )});
+            } else {
+         setTranslate({ x: (translate.x + dx) , y: (translate.y + dy )});
+               
+            }
+         setStartPanPosition({ x: event.clientX , y: event.clientY });
+       }
+      
      }
    };
  
@@ -41,19 +59,17 @@ export default function WorldMapSVGFile(props){
        const svgHeight = viewBox.height;
  
        const minScale = 0.5;
-       const maxScale = 2;
+       const maxScale = 3;
  
        // Prevent zooming out too far
        if (scale < minScale) {
          setScale(minScale);
        }
  
-       // Prevent zooming in too far
        if (scale > maxScale) {
          setScale(maxScale);
        }
  
-       // Prevent panning outside the SVG bounds
        const newTranslateX = Math.max(
          -svgWidth * scale / 2 + rect.width / 2,
          Math.min(svgWidth * scale / 2 - rect.width / 2, translate.x)

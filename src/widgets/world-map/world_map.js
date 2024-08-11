@@ -12,16 +12,8 @@ const WorldMap = () => {
    return <div className="world-map">
         <WorldMapSVGFile
           setHover={setCurrentHoveredCountry}
-          hoverRef={currentHoveredCountry}
           svgRef={svgRef}
         />
-      <div className="zoom-ctn">
-        <button className="zoom-btn" onClick={()=> {}}>+</button>
-        <button className="zoom-btn" onClick={() => {}}>-</button>
-      </div>
-      {currentHoveredCountry && (
-        <div className="hovering">Hovering over: {currentHoveredCountry}</div>
-      )}
       </div>
  
 }
