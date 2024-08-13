@@ -78,7 +78,7 @@ export default function WorldMapSVGFile(props){
          -svgHeight * scale / 2 + rect.height / 2,
          Math.min(svgHeight * scale / 2 - rect.height / 2, translate.y)
        );
-       setTranslate({ x: newTranslateX, y: newTranslateY });
+       setTranslate({ x: 0, y: 0 });
      }
    }, []);
 return <svg

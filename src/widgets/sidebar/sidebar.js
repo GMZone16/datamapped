@@ -5,7 +5,7 @@ const comfortaa = Comfortaa({ subsets: ["latin"] });
 
 export default function TopicSelect(){
     const categories = [
-        "All categories",
+        "Select category",
     "Demography", 
     "Economy", 
     "Environmental",
@@ -15,10 +15,26 @@ export default function TopicSelect(){
     ];
 
     const sources = [
-        "All sources",
+        "Select source",
     "World Bank", 
     "IMF", 
     "Unicef",
+    ];
+
+    const topics = [
+        "Select topic",
+        "Population",
+        "Population Density",
+        "GDP",
+        "GDP per Capita",
+
+    ];
+
+    const visualization = [
+        "Default visualization",
+        "World Map",
+        "Pie Chart",
+        "Bar Graph"
     ];
     return <div className="topic-select">
         <select>
@@ -35,7 +51,29 @@ export default function TopicSelect(){
                 })
             }
         </select>
-        <hr />
-        <input className="search-topic" placeholder="Search topic"/>
+        <select >
+        {
+                topics.map((e) => {
+                    return <option key={e} value={e}>{e}</option>
+                })
+            }
+        </select>
+        <div className="or">
+            or
+        </div>
+        <form>
+            <input list="topic-search" className="topic-search"placeholder="Search topic" />
+            <datalist id="topic-search">
+        <option value="Gryfindor" />
+        <option value="Hufflepuff" />
+        <option value="Slytherin" />
+        <option value="Ravenclaw" />
+        <option value="Horned Serpent" />
+        <option value="Thunderbird" />
+        <option value="Pukwudgie" />
+        <option value="Wampus" />
+
+        </datalist>
+        </form>
     </div>
 }

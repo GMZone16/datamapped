@@ -1,6 +1,5 @@
 .topic-select {
     border-radius: 10px;
-    height: 94vh;
     background-color: white;
     margin-left: 10px;
     text-align: center;
@@ -8,7 +7,7 @@
 }
 
 .topic-select select {
-    width: 80%;
+    width: 95%;
     border: 1px solid black;
     border-radius: 5px;
     padding: 15px;
@@ -16,22 +15,13 @@
     margin-bottom: 5px;
 }
 
-.category-text{
-    display: inline-flex;
-    align-items: center;
-}
-
-.category-text {
-    font-size: 14px;
-}
-
-
-.search-topic {
-    display: inline-flex;
-    align-items: center;
-    padding: 15px;
+.topic-search {
+    width: 86%;
+    padding: 4%;
     border-radius: 5px;
     border: 1px solid black;
-    background-color: transparent;
-    width: 80%;
+    margin-top: 5px;
+    font-size: 14px;
+    font-family: Comfortaa;
+    margin-bottom: 10px;
 }
