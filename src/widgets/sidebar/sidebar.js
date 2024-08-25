@@ -5,12 +5,10 @@ const comfortaa = Comfortaa({ subsets: ["latin"] });
 
 export default function TopicSelect(){
     const categories = [
-        "Select category",
+    "Select category",
     "Demography", 
     "Economy", 
     "Environmental",
-    "Health",
-    "Education",
     "Social Development"
     ];
 
