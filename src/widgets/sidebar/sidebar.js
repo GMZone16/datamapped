@@ -1,77 +1,45 @@
+"use client"
 import { Comfortaa } from "next/font/google";
 import "./sidebar.css";
+import ListTopics from "@/processors/list_topic";
+import Link from "next/link";
 
 const comfortaa = Comfortaa({ subsets: ["latin"] });
 
-export default function TopicSelect(){
-    const categories = [
-    "Select category",
-    "Demography", 
-    "Economy", 
-    "Environmental",
-    "Social Development"
-    ];
+export default function TopicSelect() {
+  function filterFunction() {
+    const input = document.getElementById("search-input");
+    const filter = input.value.toUpperCase();
+    const div = document.getElementById("search-results");
+    const a = div.getElementsByTagName("a");
+    if(filter == null || filter == "" ) {
+      div.style.display = "hidden"
+    } else {
+      div.style.display = "show"
+      for (let i = 0; i < a.length; i++) {
+        const txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          a[i].style.display = "";
+        } else {
+          a[i].style.display = "none";
+        }
+      }
+    }
+    
+  }
 
-    const sources = [
-        "Select source",
-    "World Bank", 
-    "IMF", 
-    "Unicef",
-    ];
-
-    const topics = [
-        "Select topic",
-        "Population",
-        "Population Density",
-        "GDP",
-        "GDP per Capita",
-
-    ];
-
-    const visualization = [
-        "Default visualization",
-        "World Map",
-        "Pie Chart",
-        "Bar Graph"
-    ];
-    return <div className="topic-select">
-        <select>
-            {
-                categories.map((e) => {
-                    return <option key={e} value={e}>{e}</option>
-                })
-            }
-        </select>
-        <select>
-            {
-                sources.map((e) => {
-                    return <option key={e} value={e}>{e}</option>
-                })
-            }
-        </select>
-        <select >
-        {
-                topics.map((e) => {
-                    return <option key={e} value={e}>{e}</option>
-                })
-            }
-        </select>
-        <div className="or">
-            or
+  const dat = ListTopics()
+  return (
+    <div className="sidebar">
+        <a href="/" className="sidebar-title">DataMapped</a>
+        <div className="search-container">
+            <input type="text" id="search-input" placeholder="Search" onKeyUp={filterFunction}/>
+            <ul id="search-results" className="search-results-list">
+              {dat.map((e) => {
+               return <li key={e.link}><a href={e.link}>{e.title} ({e.source})</a></li>
+              })}
+                </ul>
         </div>
-        <form>
-            <input list="topic-search" className="topic-search"placeholder="Search topic" />
-            <datalist id="topic-search">
-        <option value="Gryfindor" />
-        <option value="Hufflepuff" />
-        <option value="Slytherin" />
-        <option value="Ravenclaw" />
-        <option value="Horned Serpent" />
-        <option value="Thunderbird" />
-        <option value="Pukwudgie" />
-        <option value="Wampus" />
-
-        </datalist>
-        </form>
     </div>
+  );
 }

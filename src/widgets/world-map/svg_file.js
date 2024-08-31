@@ -25,7 +25,6 @@ export default function WorldMapSVGFile(props){
    };
  
    const handleMouseMove = (event) => {
-      console.log(isPanning);
      if (isPanning) {
        const dx = (event.clientX - startPanPosition.x) * (1/scale);
        const dy = (event.clientY - startPanPosition.y) * (1/scale);

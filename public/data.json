@@ -1,0 +1,12 @@
+{
+    "sources": [
+        {"source": "World Bank", 
+        "data": [
+            {"title": "Population, total", 
+            "path": "/world-bank/world-population", 
+            "tags": ["world", "bank", "population", "total"]}
+
+        ]
+        }
+    ]
+}

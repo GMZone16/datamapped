@@ -8,44 +8,14 @@ body {
   overflow: hidden;
 }
 
-
-.navbar {
-  top: 0px;
-  position: absolute;
-  width: 90%;
-  color: #000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 2.5%;
-  margin-top: 10px;
-  border-radius: 15px;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding-left: 15px;
-  background-image: linear-gradient(to right, #00a, #004);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.logo>a{
-text-decoration: none;
-color: #e29c2b;
-}
-
 .main-view {
   display: table;
   clear: both;
   width: 100%;
-  top: 60px;
+  top: 10px;
   position: absolute;
 }
-.sidebar {
-  width: 25%;
-  float: left;
-}
+
 
 .content {
   width: 70%;

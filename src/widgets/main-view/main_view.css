@@ -1,0 +1,88 @@
+.top-bar {
+    position: relative;
+    top: 10px;
+    width: 97vw;
+    left: 1.25vw;
+    background-image: linear-gradient(to right, rgba(169, 206, 243, 0.35), rgba(169, 239, 243, 0.35));
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.title {
+    font-size: 16px;
+    margin-left: 30px;
+    vertical-align: middle;
+}
+
+.source-title {
+    font-size: 14px;
+    margin-left: 6px;
+}
+
+.search-btn {
+    display: block;
+    height: max-content;
+    width: 50px;
+    padding: 8px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.search-btn>svg>path {
+    fill: black;
+}
+.search-container {
+}
+
+
+#search-input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 20vw;
+    font-family: Comfortaa;
+    display: none;
+}
+
+#search-results {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 2px;
+    position: absolute;
+    left: 1vw;
+    width: 20vw;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    z-index: 2;
+}
+
+#search-results li {
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+#search-results li:hover {
+    background-color: #f5f5f5;
+}
+
+#search-results li a {
+    color: black;
+  font-size: 14px;
+  padding: 10px;
+  display: block;
+  width: 20vw;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.025);
+  text-overflow: ellipsis;
+} 
